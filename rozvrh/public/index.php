@@ -4,6 +4,23 @@ spl_autoload_register(function ($classname) {
     require_once("classes/$classname.php");
 });
 
+$days = ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"];
+
+// Function to display lessons
+function displayLessons($day, $subjects)
+{
+    echo '<div class="day-container">';
+    echo '<div class="lesson-box"><p><b>' . $day . '</b></p></div>';
+    foreach ($subjects as $subject) {
+        if ($subject->name == 'Break') {
+            echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
+            continue;
+        }
+        echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
+    }
+    echo '</div>';
+}
+
 define("MATHS", "maths");
 define("CZECH", "czech");
 define("ENGLISH", "english");
@@ -111,29 +128,7 @@ $hours = array(
     "14:15 - 15:00",
     "15:05 - 15:50",
 )
-
-    // foreach ($monday as $subject) {
-//     echo $subject->name . "<br>";
-// }
-
-    // foreach ($tuesday as $subject) {
-//     echo $subject->name . "<br>";
-// }
-
-    // foreach ($wednesday as $subject) {
-//     echo $subject->name . "<br>";
-// }
-
-    // foreach ($thursday as $subject) {
-//     echo $subject->name . "<br>";
-// }
-
-    // foreach ($friday as $subject) {
-//     echo $subject->name . "<br>";
-// }
-
     ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -147,14 +142,6 @@ $hours = array(
             background-color: #f0f0f0;
         }
 
-        .hour-container {
-            display: inline-block;
-            margin-right: 10px;
-            padding: 20px;
-            border: 1px solid #000;
-            background-color: #ffffff;
-        }
-
         .lesson-box {
             width: 150px;
             height: 125px;
@@ -164,9 +151,17 @@ $hours = array(
             float: left;
         }
 
+        .hour-container {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 20px;
+            border: 1px solid #000;
+            background-color: #ffffff;
+        }
+
         .hour-box {
             width: 150px;
-            height: 100PX;
+            height: 100px;
             border: 1px solid #000;
             text-align: center;
             margin: 5px;
@@ -177,8 +172,8 @@ $hours = array(
 
 <body>
     <div class="hour-container">
-    <div class="hour-box">
-            <p><b>MONDAY</b></p>
+        <div class="hour-box">
+            <p><b></b></p>
         </div>
         <?php
         $i = 0;
@@ -188,80 +183,28 @@ $hours = array(
         }
         ?>
     </div>
-    <div class="day-container">
-        <div class="lesson-box">
-            <p><b>MONDAY</b></p>
-        </div>
-        <?php
-        foreach ($monday as $subject) {
-            if ($subject->name == 'Break') {
-                echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
-                continue;
-            }
-            echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
-        }
-        ?>
-    </div>
 
-    <div class="day-container">
-        <div class="lesson-box">
-            <p><b>TUESDAY</b></p>
-        </div>
-        <?php
-        foreach ($tuesday as $subject) {
-            if ($subject->name == 'Break') {
-                echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
-                continue;
-            }
-            echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
+    <?php
+    foreach ($days as $day) {
+        switch ($day) {
+            case "MONDAY":
+                displayLessons($day, $monday);
+                break;
+            case "TUESDAY":
+                displayLessons($day, $tuesday);
+                break;
+            case "WEDNESDAY":
+                displayLessons($day, $wednesday);
+                break;
+            case "THURSDAY":
+                displayLessons($day, $thursday);
+                break;
+            case "FRIDAY":
+                displayLessons($day, $friday);
+                break;
         }
-        ?>
-    </div>
-
-    <div class="day-container">
-        <div class="lesson-box">
-            <p><b>WEDNESDAY</b></p>
-        </div>
-        <?php
-        foreach ($wednesday as $subject) {
-            if ($subject->name == 'Break') {
-                echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
-                continue;
-            }
-            echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
-        }
-        ?>
-    </div>
-
-    <div class="day-container">
-        <div class="lesson-box">
-            <p><b>THURSDAY</b></p>
-        </div>
-        <?php
-        foreach ($thursday as $subject) {
-            if ($subject->name == 'Break') {
-                echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
-                continue;
-            }
-            echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
-        }
-        ?>
-    </div>
-
-    <div class="day-container">
-        <div class="lesson-box">
-            <p><b>FRIDAY</b></p>
-        </div>
-        <?php
-        foreach ($friday as $subject) {
-            if ($subject->name == 'Break') {
-                echo '<div class="lesson-box" style="background-color: #ffffff;"></div>';
-                continue;
-            }
-            echo '<div class="lesson-box"><p>' . $subject->name . '</p><p>' . $subject->room . '</p><p>' . $subject->teacher . '</p></div>';
-        }
-        ?>
-    </div>
+    }
+    ?>
 </body>
 
 </html>
